@@ -1,0 +1,11 @@
+version: '2'
+services:
+  gui:
+    image: awalach/openvpn-web-ui
+    container_name: openvpn-gui
+    ports:
+     - "8181:8181/tcp"
+    restart: always
+    volumes:
+     - ./openvpn-data/conf:/etc/openvpn
+     - ./openvpn-data/db:/opt/openvpn-gui/db
