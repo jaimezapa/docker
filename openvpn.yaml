@@ -1,19 +1,23 @@
-version: "2.1"
+version: '2'
 services:
-  openvpn-as:
-    image: ghcr.io/linuxserver/openvpn-as
-    container_name: JAIME-openvpn-as
+  openvpn:
     cap_add:
-      - NET_ADMIN
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Madrid
-      - INTERFACE=enp2s0 #optional
-    volumes:
-      - /srv/dev-disk-by-uuid-350691bf-a4a0-4a09-9e53-0ebd25c63032/Config:/config
+     - NET_ADMIN
+    image: awalach/openvpn
+    container_name: openvpn
     ports:
-      - 943:943
-      - 9443:9443
-      - 1194:1194/udp
-    restart: unless-stopped
+     - "1194:1194/udp"
+    restart: always
+    depends_on:
+      - "gui"
+    volumes:
+     - ./openvpn-data/conf:/etc/openvpn
+  gui:
+    image: awalach/openvpn-web-ui
+    container_name: openvpn-gui
+    ports:
+     - "8181:8181/tcp"
+    restart: always
+    volumes:
+     - ./openvpn-data/conf:/etc/openvpn
+     - ./openvpn-data/db:/opt/openvpn-gui/db
