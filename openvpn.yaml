@@ -2,7 +2,7 @@ version: "2.1"
 services:
   openvpn-as:
     image: ghcr.io/linuxserver/openvpn-as
-    container_name: openvpn-as
+    container_name: JAIME-openvpn-as
     cap_add:
       - NET_ADMIN
     environment:
